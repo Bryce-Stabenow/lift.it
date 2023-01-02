@@ -93,7 +93,7 @@ const renderLifts = (category) => {
             }
 
             //Add attributes
-            newLiftCard.setAttribute('class', 'liftCard');
+            newLiftCard.setAttribute('class', 'liftCard pointer');
             cardTitle.setAttribute('class', 'liftCardTitle');
             topCard.setAttribute('class', 'cardTop');
             cardWeight.setAttribute('class', 'liftCardWeight');
@@ -120,11 +120,13 @@ const removeLift = () => {
     let existingLifts = JSON.parse(localStorage.getItem(category));
     let liftNameToDelete = document.querySelector("input[name='liftName']").value;
 
-    delete existingLifts[liftNameToDelete];
+    if(confirm('Continue deleting this lift?')){
+        delete existingLifts[liftNameToDelete];
 
-    localStorage.setItem(category, JSON.stringify(existingLifts));
-    renderLifts(currentTab);
-    closeModal();
+        localStorage.setItem(category, JSON.stringify(existingLifts));
+        renderLifts(currentTab);
+        closeModal();
+    };
 }
 
 const editLift = (category, liftName, liftData) => {
@@ -143,12 +145,7 @@ const editLift = (category, liftName, liftData) => {
 
 //Initialize app logic
 if(!localStorage.getItem('brawnData')){
-    localStorage.setItem('brawnPush', JSON.stringify({}));
-    localStorage.setItem('brawnPull', JSON.stringify({}));
-    localStorage.setItem('brawnLegs', JSON.stringify({}));
-    localStorage.setItem('brawnCardio', JSON.stringify({}));
-    localStorage.setItem('brawnAbs', JSON.stringify({}));
-    localStorage.setItem('brawnData',  true);
+    resetData();
 }
 
 navTabs.forEach((tab) => {
@@ -156,6 +153,21 @@ navTabs.forEach((tab) => {
 });
 
 renderLifts('push');
+
+const resetData = () => {
+    localStorage.setItem('brawnPush', JSON.stringify({}));
+    localStorage.setItem('brawnPull', JSON.stringify({}));
+    localStorage.setItem('brawnLegs', JSON.stringify({}));
+    localStorage.setItem('brawnCardio', JSON.stringify({}));
+    localStorage.setItem('brawnAbs', JSON.stringify({}));
+    localStorage.setItem('brawnData',  true);
+    renderLifts('push');
+    document.querySelector(".credits-modal-overlay").style.display = 'none';
+}
+
+const manualReset = () => {
+    confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
+}
 
 //Initialize Modal
 const clearModal = () => {
@@ -205,6 +217,17 @@ const submitModal = (e) => {
     addLift(category, newLift);
     closeModal();
     updateTab(e.currentTarget.liftCategory.value + 'Tab');
+}
+
+const toggleCreditsModal = () => {
+    let creditsModal = document.querySelector(".credits-modal-overlay");
+
+    if(creditsModal.style.display === 'flex'){
+        creditsModal.style.display = 'none';
+    }
+    else {
+        creditsModal.style.display = 'flex';
+    }
 }
 
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);

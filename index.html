@@ -9,29 +9,25 @@
 </head>
 <body>
     <header>
-        <h1 onclick="openCreditsModal()">LIFT.IT</h1>
+        <h1 onclick="toggleCreditsModal()" class="pointer">LIFT.IT</h1>
     </header>
 
     <nav>
         <ul>
-            <li id="pushTab" class="navTab selectedTab">Push</li>
-            <li id="pullTab" class="navTab">Pull</li>
-            <li id="legsTab" class="navTab">Legs</li>
-            <li id="cardioTab" class="navTab">Cardio</li>
-            <li id="absTab" class="navTab">Abs</li>
+            <li id="pushTab" class="navTab pointer selectedTab">Push</li>
+            <li id="pullTab" class="navTab pointer">Pull</li>
+            <li id="legsTab" class="navTab pointer">Legs</li>
+            <li id="cardioTab" class="navTab pointer">Cardio</li>
+            <li id="absTab" class="navTab pointer">Abs</li>
         </ul>
     </nav>
 
     <main></main>
 
-    <div class="addButton">
-        <button id="addButton" onclick="openModal()">+</button>
-    </div>
-
     <div class="modal-overlay">
         <div class="modal-body">
             <form name="addLift">
-                <p class="modal-close" onclick="closeModal()">X</p>
+                <p class="modal-close pointer" onclick="closeModal()">X</p>
                 <h4>Add a Lift:</h4>
                 <div class="formInput">
                     <label for="liftName">Lift Name:</label>
@@ -62,12 +58,26 @@
                         <input name="reps5" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
                     </div>
                 </div>
-                <input name="submit" type="submit" value="Add"/>
+                <input name="submit" type="submit" value="Add" class="pointer"/>
             </form>
-            <button id="deleteLift" onclick="removeLift()">Delete Lift</button>
+            <button id="deleteLift" onclick="removeLift()" class="pointer">Delete Lift</button>
+        </div>
+    </div>
+
+    <div class="credits-modal-overlay">
+        <div class="credits-modal-body">
+        <p class="modal-close pointer" onclick="toggleCreditsModal()">X</p>
+        <p>Created by <a class="creditsLink" href="https://www.twitter.com/BryceStabenow" target="_blank" rel="noreferrer">Bryce Stabenow</a></p>
+        <p>Copyright 2023</p>
+        <br />
+        <button class="resetButton pointer" onclick="manualReset()">RESET ALL DATA</button>
         </div>
     </div>
     
+    <footer>
+        <button id="addButton" class="pointer" onclick="openModal()">+</button>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

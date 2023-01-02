@@ -10,6 +10,10 @@ body {
     align-items: center;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 h2, h3 {
     margin: 0;
 }
@@ -27,13 +31,15 @@ main {
 
 header {
     max-height: 8vh;
+    display: flex;
+    justify-content: center;
 }
 
 nav {
     max-height: 10vh;
 }
 
-div.addButton {
+footer {
     max-height: 6vh;
     margin: 1vh 0px 0px 0px;
     width: 6vh;
@@ -124,7 +130,7 @@ li {
 }
 
 /* Modal CSS */
-.modal-overlay {
+.modal-overlay, .credits-modal-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -136,11 +142,11 @@ li {
     justify-content: center;
 }
 
-.modal-body {
+.modal-body, .credits-modal-body {
     background-color: white;
     position: fixed;
     color: black;
-    min-width: 80vw;
+    max-width: 80vw;
     border-radius: 5px;
     padding: 20px;
 }
@@ -206,6 +212,19 @@ button#deleteLift {
     border: 1px solid rgb(255, 102, 102);
     color:rgb(255, 102, 102);
     margin-top: 20px;
+}
+
+.creditsLink {
+    text-decoration: none;
+    color: rgb(255, 102, 102);
+}
+
+.resetButton {
+    background-color: rgb(255, 102, 102);
+    color: white;
+    padding: 10px 5px;
+    border: none;
+    border-radius: 5px;
 }
 
 /* Responsive */
