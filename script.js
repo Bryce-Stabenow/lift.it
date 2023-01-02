@@ -15,9 +15,13 @@ const updateTab = (e) => {
         tab.classList.remove('selectedTab')
     });
 
-    e.target.classList.add('selectedTab');
-
-    renderLifts(e.target.id);
+    if(typeof(e) === 'string'){
+        document.querySelector('#' + e).classList.add('selectedTab');
+        renderLifts(e);
+    } else {
+        e.target.classList.add('selectedTab');
+        renderLifts(e.target.id);
+    }
 }
 
 //Main CRUD Logic
@@ -123,6 +127,7 @@ navTabs.forEach((tab) => {
 
 renderLifts('push');
 
+//Initialize Modal
 const openModal = () => {
     let overlay = document.querySelector('.modal-overlay');
     overlay.style.display = 'flex';
@@ -132,3 +137,29 @@ const closeModal = () => {
     let overlay = document.querySelector('.modal-overlay');
     overlay.style.display = 'none';
 }
+
+const submitModal = (e) => {
+    e.preventDefault();
+
+    let category =  'brawn' + capFirst(e.currentTarget.liftCategory.value);
+
+    let reps = [
+        e.currentTarget.reps1.value, 
+        e.currentTarget.reps2.value, 
+        e.currentTarget.reps3.value, 
+        e.currentTarget.reps4.value, 
+        e.currentTarget.reps5.value, 
+    ];
+
+    let newLift = {
+        name: e.currentTarget.liftName.value,
+        weight: e.currentTarget.liftWeight.value,
+        reps: reps.filter((set) => set !== ''),
+    };
+
+    addLift(category, newLift);
+    closeModal();
+    updateTab(e.currentTarget.liftCategory.value + 'Tab');
+}
+
+document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);

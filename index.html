@@ -28,21 +28,32 @@
 
     <div class="modal-overlay">
         <div class="modal-body">
-            <form action="POST">
+            <form name="addLift">
                 <p class="modal-close" onclick="closeModal()">X</p>
                 <h4>Add a Lift:</h4>
                 <div class="formInput">
                     <label for="liftName">Lift Name:</label>
-                    <input name="liftName" type="text"/>
+                    <input name="liftName" type="text" required/>
                 </div>
                 <div class="formInput">
                     <label for="liftWeight">Weight:</label>
-                    <input name="liftWeight" type="number" min="5" max="1000" step="10"/>
+                    <input name="liftWeight" type="number" min="5" max="1000" step="2.5" required/>
+                </div>
+                <div class="formInput">
+                    <label for="liftCategory">Category:</label>
+                    <select name="liftCategory" required>
+                        <option value="" selected disabled></option>
+                        <option value="push">Push</option>
+                        <option value="pull">Pull</option>
+                        <option value="legs">Legs</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="abs">Abs</option>
+                    </select>
                 </div>
                 <div class="formInput">
                     <label for="reps1">Reps:</label>
                     <div class="repsField">
-                        <input name="reps1" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                        <input name="reps1" type="number" min="0" max="100" class="repsInput" placeholder="0" required/>
                         <input name="reps2" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
                         <input name="reps3" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
                         <input name="reps4" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
