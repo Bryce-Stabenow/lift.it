@@ -49,7 +49,7 @@ header > h1{
     margin-bottom: 5px;
     font-size: 2rem;
     color:rgb(255, 102, 102);
-    font-family:Impact, Arial, sans-serif;
+    font-family: 'Anton', Impact, sans-serif;
     letter-spacing: 3px;
 }
 
@@ -107,7 +107,7 @@ li {
 .liftCardTitle {
     text-align: left;
     font-size: 2rem;
-    font-family: Impact, Arial, sans-serif;
+    font-family: 'Anton', Impact, sans-serif;
     letter-spacing: 2px;
 }
 
@@ -159,7 +159,7 @@ li {
 }
 
 form > h4 {
-    font-family: Impact, Arial, sans-serif;
+    font-family: 'Anton', Impact, sans-serif;
     color: rgb(255, 102, 102);
     font-size: 2rem;
     margin: 0;
