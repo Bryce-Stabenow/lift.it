@@ -23,6 +23,36 @@
     </nav>
 
     <main></main>
+
+    <button id="addButton" onclick="openModal()">+</button>
+
+    <div class="modal-overlay">
+        <div class="modal-body">
+            <form action="POST">
+                <p class="modal-close" onclick="closeModal()">X</p>
+                <h4>Add a Lift:</h4>
+                <div class="formInput">
+                    <label for="liftName">Lift Name:</label>
+                    <input name="liftName" type="text"/>
+                </div>
+                <div class="formInput">
+                    <label for="liftWeight">Weight:</label>
+                    <input name="liftWeight" type="number" min="5" max="1000" step="10"/>
+                </div>
+                <div class="formInput">
+                    <label for="reps1">Reps:</label>
+                    <div class="repsField">
+                        <input name="reps1" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                        <input name="reps2" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                        <input name="reps3" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                        <input name="reps4" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                        <input name="reps5" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                    </div>
+                </div>
+                <input name="submit" type="submit" value="Add"/>
+            </form>
+        </div>
+    </div>
     
     <script src="script.js"></script>
 </body>

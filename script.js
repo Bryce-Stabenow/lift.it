@@ -67,8 +67,15 @@ const renderLifts = (category) => {
             cardWeight.setAttribute('class', 'liftCardWeight');
             reps.setAttribute('class', 'liftCardReps');
 
-            document.querySelector('main').appendChild(newLiftCard);
+            document.querySelector('main').appendChild(fragment);
         });
+    } else if (keys.length === 0){
+        let fragment = document.createDocumentFragment();
+        let text = fragment.appendChild(document.createElement('p'));
+
+        text.textContent = 'No Lifts Yet';
+        text.setAttribute('class','message');
+        document.querySelector('main').appendChild(fragment);
     }
 }
 
@@ -115,3 +122,13 @@ navTabs.forEach((tab) => {
 });
 
 renderLifts('push');
+
+const openModal = () => {
+    let overlay = document.querySelector('.modal-overlay');
+    overlay.style.display = 'flex';
+}
+
+const closeModal = () => {
+    let overlay = document.querySelector('.modal-overlay');
+    overlay.style.display = 'none';
+}

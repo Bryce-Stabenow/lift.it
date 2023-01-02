@@ -19,12 +19,18 @@ header, nav, main {
     text-align: center;
 }
 
-header > h1 {
+header > h1{
     margin-bottom: 5px;
     font-size: 2rem;
     color:rgb(255, 102, 102);
     font-family:Impact, Arial, sans-serif;
     letter-spacing: 3px;
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: rgb(100,100,100);
 }
 
 ul {
@@ -48,6 +54,16 @@ li {
 
 .selectedTab {
     background-color: rgb(80,80,80);
+}
+
+#addButton {
+    font-size: 3rem;
+    color: rgb(30, 30, 30);
+    background-color: rgb(255, 102, 102);
+    border-radius: 50%;
+    min-height: 55px;
+    min-width: 55px;
+    border: none;
 }
 
 .liftCard {
@@ -83,5 +99,83 @@ li {
 
 .liftCardReps {
     text-align: right;
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+/* Modal CSS */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+    min-width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body {
+    background-color: white;
+    position: fixed;
+    color: black;
+    min-height: 60vh;
+    min-width: 80vw;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 1.5rem;
+}
+
+form > h4 {
+    font-family: Impact, Arial, sans-serif;
+    color: rgb(255, 102, 102);
+    font-size: 2rem;
+    margin: 0;
+    text-align: center;
+}
+
+.formInput {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+input {
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid black;
+}
+
+input[name=liftWeight]{
+    width: 50%;
+}
+
+.repsField {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.repsInput{
+    width: 10%;
+}
+
+input[type=submit] {
+    color: white;
+    background-color: rgb(255, 102, 102);
+    border: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    margin-top: 60px;
+    width: 100%;
+    justify-self: center;
 }
