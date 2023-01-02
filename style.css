@@ -3,20 +3,28 @@ body {
     padding: 0;
     background-color: rgb(30, 30, 30);
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 }
 
-header, nav {
+h2, h3 {
+    margin: 0;
+}
+
+header, nav, main {
     width: 100%;
     text-align: center;
 }
 
 header > h1 {
     margin-bottom: 5px;
+    font-size: 2rem;
+    color:rgb(255, 102, 102);
+    font-family:Impact, Arial, sans-serif;
+    letter-spacing: 3px;
 }
 
 ul {
@@ -38,4 +46,35 @@ li {
 
 .selectedTab {
     background-color: rgb(100,100,100);
+}
+
+.liftCard {
+    background-color: rgb(100,100,100);
+    margin: 5%;
+    width: 80%;
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 5%;
+}
+
+.liftCardTitle, .cardRight {
+    width: 50%;
+    text-align: right;
+}
+
+.liftCardTitle {
+    text-align: left;
+    font-size: 2rem;
+    font-family: Impact, Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
+.cardRight {
+    justify-content: end;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.liftCardWeight {
+    color: rgb(255, 102, 102);
 }

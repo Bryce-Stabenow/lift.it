@@ -47,17 +47,25 @@ const renderLifts = (category) => {
         keys.forEach(key => {
             let data = (lifts[key]);
 
-            //Create div to add
+            //Create elements to add
             let fragment = document.createDocumentFragment();
             let newLiftCard = fragment.appendChild(document.createElement('div'));
             let cardTitle = newLiftCard.appendChild(document.createElement('h2'));
-            let cardWeight = newLiftCard.appendChild(document.createElement('h3'));
-            let reps = newLiftCard.appendChild(document.createElement('h3'));
+            let rightCard = newLiftCard.appendChild(document.createElement('div'));
+            let cardWeight = rightCard.appendChild(document.createElement('h3'));
+            let reps = rightCard.appendChild(document.createElement('h3'));
 
-            newLiftCard.setAttribute('class', 'liftCard')
+            //Set text for elements
             cardTitle.textContent = data.name;
             cardWeight.textContent = data.weight + ' lbs.';
             reps.textContent = 'Sets: ' + data.reps;
+
+            //Add Classes
+            newLiftCard.setAttribute('class', 'liftCard');
+            cardTitle.setAttribute('class', 'liftCardTitle');
+            rightCard.setAttribute('class', 'cardRight');
+            cardWeight.setAttribute('class', 'liftCardWeight');
+            reps.setAttribute('class', 'liftCardReps');
 
             document.querySelector('main').appendChild(newLiftCard);
         });
@@ -105,3 +113,5 @@ if(!localStorage.getItem('brawnData')){
 navTabs.forEach((tab) => {
     tab.addEventListener('click', updateTab);
 });
+
+renderLifts('push');
