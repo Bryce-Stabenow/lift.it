@@ -42,24 +42,23 @@ li {
     list-style: none;
     width: 100%;
     padding: 5px 2.5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .selectedTab {
-    background-color: rgb(100,100,100);
+    background-color: rgb(80,80,80);
 }
 
 .liftCard {
-    background-color: rgb(100,100,100);
+    background-color: rgb(80,80,80);
     margin: 5%;
     width: 80%;
     display: flex;
-    flex-flow: row nowrap;
-    padding: 5%;
-}
-
-.liftCardTitle, .cardRight {
-    width: 50%;
-    text-align: right;
+    flex-flow: column nowrap;
+    padding: 5% 5% 0 5%;
+    min-height: 80px;
+    border-radius: 5px;
 }
 
 .liftCardTitle {
@@ -69,12 +68,20 @@ li {
     letter-spacing: 2px;
 }
 
-.cardRight {
-    justify-content: end;
+.cardTop {
+    justify-content: space-between;
+    align-items: baseline;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
+    width: 100%;
+    text-align: right;
 }
 
 .liftCardWeight {
     color: rgb(255, 102, 102);
+}
+
+.liftCardReps {
+    text-align: right;
+    margin-top: 5px;
 }
