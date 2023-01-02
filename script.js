@@ -1,13 +1,23 @@
-//Initialize app data in localstorage
-if(!localStorage.getItem('brawnData')){
-    localStorage.setItem('brawnPush', JSON.stringify({
-        "First Lift": {name: 'First Lift', weight: 45, reps: [12,12,10]},
-    }));
-    localStorage.setItem('brawnPull', JSON.stringify({}));
-    localStorage.setItem('brawnLegs', JSON.stringify({}));
-    localStorage.setItem('brawnCardio', JSON.stringify({}));
-    localStorage.setItem('brawnAbs', JSON.stringify({}));
-    localStorage.setItem('brawnData',  true);
+const navTabs = document.querySelectorAll('.navTab');
+
+const capFirst = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const removeAllChildren = (element) => {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+}
+
+const updateTab = (e) => {
+    navTabs.forEach((tab) => {
+        tab.classList.remove('selectedTab')
+    });
+
+    e.target.classList.add('selectedTab');
+
+    renderLifts(e.target.id);
 }
 
 //Main CRUD Logic
@@ -28,7 +38,30 @@ const addLift = (category, newData) => {
 }
 
 const renderLifts = (category) => {
-    
+    let name = 'brawn' + capFirst(category.replace('Tab', ''));
+    let lifts = JSON.parse(localStorage.getItem(name));
+    let keys = Object.keys(lifts);
+    removeAllChildren(document.querySelector('main'));
+
+    if(keys.length > 0){
+        keys.forEach(key => {
+            let data = (lifts[key]);
+
+            //Create div to add
+            let fragment = document.createDocumentFragment();
+            let newLiftCard = fragment.appendChild(document.createElement('div'));
+            let cardTitle = newLiftCard.appendChild(document.createElement('h2'));
+            let cardWeight = newLiftCard.appendChild(document.createElement('h3'));
+            let reps = newLiftCard.appendChild(document.createElement('h3'));
+
+            newLiftCard.setAttribute('class', 'liftCard')
+            cardTitle.textContent = data.name;
+            cardWeight.textContent = data.weight + ' lbs.';
+            reps.textContent = 'Sets: ' + data.reps;
+
+            document.querySelector('main').appendChild(newLiftCard);
+        });
+    }
 }
 
 const removeLift = (category, liftName) => {
@@ -56,3 +89,19 @@ const editLift = (category, liftName, liftData) => {
 
     localStorage.setItem(category, JSON.stringify(existingLifts));
 }
+
+//Initialize app logic
+if(!localStorage.getItem('brawnData')){
+    localStorage.setItem('brawnPush', JSON.stringify({
+        "First Lift": {name: 'First Lift', weight: 45, reps: [12,12,10]},
+    }));
+    localStorage.setItem('brawnPull', JSON.stringify({}));
+    localStorage.setItem('brawnLegs', JSON.stringify({}));
+    localStorage.setItem('brawnCardio', JSON.stringify({}));
+    localStorage.setItem('brawnAbs', JSON.stringify({}));
+    localStorage.setItem('brawnData',  true);
+}
+
+navTabs.forEach((tab) => {
+    tab.addEventListener('click', updateTab);
+});
