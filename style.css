@@ -19,6 +19,26 @@ header, nav, main {
     text-align: center;
 }
 
+main {
+    overflow-x: scroll;
+    overflow-x: hidden;
+    max-height: 75vh;
+}
+
+header {
+    max-height: 8vh;
+}
+
+nav {
+    max-height: 10vh;
+}
+
+div.addButton {
+    max-height: 6vh;
+    margin: 1vh 0px 0px 0px;
+    width: 6vh;
+}
+
 header > h1{
     margin-bottom: 5px;
     font-size: 2rem;
@@ -57,12 +77,13 @@ li {
 }
 
 #addButton {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: rgb(30, 30, 30);
     background-color: rgb(255, 102, 102);
     border-radius: 50%;
-    min-height: 55px;
-    min-width: 55px;
+    padding: 0;
+    width: 55px;
+    height: 55px;
     border: none;
 }
 
@@ -168,7 +189,7 @@ input[name=liftWeight]{
     width: 10%;
 }
 
-input[type=submit] {
+input[type=submit], button#deleteLift {
     color: white;
     background-color: rgb(255, 102, 102);
     border: none;
@@ -177,4 +198,38 @@ input[type=submit] {
     margin-top: 60px;
     width: 100%;
     justify-self: center;
+}
+
+button#deleteLift {
+    background-color: white;
+    font-size: 1.5rem;
+    border: 1px solid rgb(255, 102, 102);
+    color:rgb(255, 102, 102);
+    margin-top: 20px;
+}
+
+/* Responsive */
+@media screen and (max-width: 306px) {
+    #addButton {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    h1 {
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+    ul {
+        flex-flow: row wrap;
+        margin: 0;
+    }
+    li {
+        font-size: 1rem;
+        width: 50%;
+        padding: 5px 0px;
+        border-radius: 0;
+    }
+    li:last-child {
+        padding: 5px 0px 0px 0px;
+    }
 }
