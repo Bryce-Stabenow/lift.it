@@ -144,16 +144,6 @@ const editLift = (category, liftName, liftData) => {
 }
 
 //Initialize app logic
-if(!localStorage.getItem('brawnData')){
-    resetData();
-}
-
-navTabs.forEach((tab) => {
-    tab.addEventListener('click', updateTab);
-});
-
-renderLifts('push');
-
 const resetData = () => {
     localStorage.setItem('brawnPush', JSON.stringify({}));
     localStorage.setItem('brawnPull', JSON.stringify({}));
@@ -164,6 +154,16 @@ const resetData = () => {
     renderLifts('push');
     document.querySelector(".credits-modal-overlay").style.display = 'none';
 }
+
+if(!localStorage.getItem('brawnData')){
+    resetData();
+}
+
+navTabs.forEach((tab) => {
+    tab.addEventListener('click', updateTab);
+});
+
+renderLifts('push');
 
 const manualReset = () => {
     confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
