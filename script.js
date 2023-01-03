@@ -42,7 +42,8 @@ const addLift = (category, newData) => {
 
 const inspectLift = (e) => {
     let title = e.currentTarget.querySelector('.liftCardTitle').innerText;
-    let lift = JSON.parse(localStorage.getItem('brawn' + capFirst(currentTab)))[title];
+    let dataName = 'brawn' + capFirst(currentTab.replace('Tab', ''));
+    let lift = JSON.parse(localStorage.getItem(dataName))[title];
     openModal();
 
     //Set values in form
@@ -59,13 +60,10 @@ const inspectLift = (e) => {
 }
 
 const renderLifts = (category) => {
-    console.log(category)
     let name = 'brawn' + capFirst(category.replace('Tab', ''));
     let lifts = JSON.parse(localStorage.getItem(name));
     let keys = Object.keys(lifts);
     removeAllChildren(document.querySelector('main'));
-
-    console.log(lifts)
 
     if(keys.length > 0){
         keys.forEach(key => {
@@ -164,13 +162,11 @@ const updateTab = (e) => {
         localStorage.setItem('currentTab', e);
 
     } else {
-        console.log(e.target)
         e.target.classList.add('selectedTab');
         renderLifts(e.target.id);
         localStorage.setItem('currentTab', e.target.id);
     }
 }
-console.log(currentTab)
 updateTab(currentTab);
 
 if(!localStorage.getItem('brawnData')){

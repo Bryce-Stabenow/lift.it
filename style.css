@@ -136,6 +136,7 @@ li {
 .liftCardReps {
     text-align: right;
     margin-top: 10px;
+    padding-bottom: 5px;
 }
 
 /* Modal CSS */
