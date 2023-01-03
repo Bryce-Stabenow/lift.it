@@ -39,6 +39,15 @@ nav {
     max-height: 10vh;
 }
 
+#timerButton {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    fill: rgb(255, 102, 102);
+    width: 30px;
+    height: 30px;
+}
+
 footer {
     max-height: 6vh;
     margin: 1vh 0px 0px 0px;
@@ -130,7 +139,7 @@ li {
 }
 
 /* Modal CSS */
-.modal-overlay, .credits-modal-overlay {
+.modal-overlay, .credits-modal-overlay, .timer-modal-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -142,7 +151,7 @@ li {
     justify-content: center;
 }
 
-.modal-body, .credits-modal-body {
+.modal-body, .credits-modal-body, .timer-modal-body {
     background-color: white;
     position: fixed;
     color: black;

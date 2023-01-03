@@ -181,7 +181,7 @@ navTabs.forEach((tab) => {
     tab.addEventListener('click', updateTab);
 });
 
-//Initialize Modal -------------------------------------------------------------------------------//
+//Initialize Modals ------------------------------------------------------------------------------//
 const clearModal = () => {
     document.querySelector("form>h4").innerText = 'Add a Lift:';
     document.querySelector("input[name='submit']").value = 'Add';
@@ -242,4 +242,23 @@ const toggleCreditsModal = () => {
     }
 }
 
+const toggleTimerModal = () => {
+    let timerModal = document.querySelector(".timer-modal-overlay");
+
+    if(timerModal.style.display === 'flex'){
+        timerModal.style.display = 'none';
+    }
+    else {
+        timerModal.style.display = 'flex';
+    }
+}
+
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);
+
+//Initialize Timer ------------------------------------------------------------------------------//
+let timeInMS = 0 * 1000;
+
+const updateTime = (num) => {
+    timeInMS = num * 1000;
+}
+
