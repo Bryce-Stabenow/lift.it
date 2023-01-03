@@ -254,7 +254,34 @@ document.querySelector('[name="addLift"]').addEventListener('submit', submitModa
 //Initialize Timer ------------------------------------------------------------------------------//
 let timeInMS = 0 * 1000;
 
-const updateTime = (num) => {
-    timeInMS = num * 1000;
-}
+const getUserTimerInputs = () => {
+    let timerMinutes = parseInt(document.querySelector('#timerMinutes').value);
+    let timerSeconds = parseInt(document.querySelector('#timerSeconds').value);
 
+    return [timerMinutes, timerSeconds];
+};
+
+const getTimeInMS = () => {
+    let inputs = getUserTimerInputs();
+    let timerMinutes = inputs[0];
+    let timerSeconds = inputs[1];
+    return (timerMinutes * 1000) + (timerSeconds * 100);
+};
+
+const formatTime = (timeMS) => {
+    return (timeMS / 1000) * 60;
+};
+
+const renderTime = () => {
+    let input = getTimeInMS();
+    let display = document.querySelector('.timerTime');
+    let formattedTime = formatTime(input);
+
+    display.innerText = formattedTime + ' sec.';
+};
+
+renderTime();
+
+const startTimer = () => {
+    
+}
