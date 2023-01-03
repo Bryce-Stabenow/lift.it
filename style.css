@@ -152,10 +152,11 @@ li {
     justify-content: center;
 }
 
-.modal-body, .credits-modal-body, .timer-modal-body {
+.timer-modal-body, .modal-body, .credits-modal-body {
     background-color: white;
     position: fixed;
     color: black;
+    min-width: 80vw;
     max-width: 80vw;
     border-radius: 5px;
     padding: 20px;
@@ -167,12 +168,55 @@ li {
 
 .modal-close {
     position: absolute;
-    top: 0;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
 }
 
-form > h4 {
+#timerInputs {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.timerNumberInput {
+    width: 50%;
+}
+
+#timerMinutes, #timerSeconds {
+    width: 40%;
+    padding: 5px;
+}
+
+.timerTime {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.timerControls {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.timerControls button {
+    background-color: rgb(255, 102, 102);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 2rem;
+    border-radius: 5px;
+}
+
+form > h4, .timerTitle {
     font-family: 'Anton', Impact, sans-serif;
     color: rgb(255, 102, 102);
     font-size: 2rem;
@@ -188,7 +232,7 @@ form > h4 {
     font-weight: bold;
 }
 
-input, select {
+.modal-overlay input, select {
     font-size: 1.5rem;
     border-radius: 5px;
     padding: 5px 10px;
