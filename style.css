@@ -40,7 +40,7 @@ nav {
 }
 
 #timerButton {
-    position: fixed;
+    position: absolute;
     top: 15px;
     right: 15px;
     fill: rgb(255, 102, 102);
