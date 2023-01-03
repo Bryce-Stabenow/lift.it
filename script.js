@@ -1,6 +1,13 @@
+//Utility functions and get tab ------------------------------------------------------------------//
 const navTabs = document.querySelectorAll('.navTab');
+let currentTab = 'pushTab';
 
-let currentTab = 'push';
+if (!localStorage.getItem('currentTab')){
+    localStorage.setItem('currentTab', 'pushTab');
+}
+else {
+    currentTab = localStorage.getItem('currentTab');
+};
 
 const capFirst = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -12,23 +19,11 @@ const removeAllChildren = (element) => {
     }
 }
 
-const updateTab = (e) => {
-    navTabs.forEach((tab) => {
-        tab.classList.remove('selectedTab')
-    });
-
-    if(typeof(e) === 'string'){
-        document.querySelector('#' + e).classList.add('selectedTab');
-        renderLifts(e);
-        currentTab = e.replace('Tab', '');
-    } else {
-        e.target.classList.add('selectedTab');
-        renderLifts(e.target.id);
-        currentTab = e.target.id.replace('Tab', '');
-    }
+const manualReset = () => {
+    confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
 }
 
-//Main CRUD Logic
+//Load CRUD Logic -------------------------------------------------------------------------------//
 const addLift = (category, newData) => {
     let existingLifts = JSON.parse(localStorage.getItem(category));
 
@@ -64,10 +59,13 @@ const inspectLift = (e) => {
 }
 
 const renderLifts = (category) => {
+    console.log(category)
     let name = 'brawn' + capFirst(category.replace('Tab', ''));
     let lifts = JSON.parse(localStorage.getItem(name));
     let keys = Object.keys(lifts);
     removeAllChildren(document.querySelector('main'));
+
+    console.log(lifts)
 
     if(keys.length > 0){
         keys.forEach(key => {
@@ -143,7 +141,7 @@ const editLift = (category, liftName, liftData) => {
     localStorage.setItem(category, JSON.stringify(existingLifts));
 }
 
-//Initialize app logic
+//Initialize app logic ---------------------------------------------------------------------------//
 const resetData = () => {
     localStorage.setItem('brawnPush', JSON.stringify({}));
     localStorage.setItem('brawnPull', JSON.stringify({}));
@@ -151,9 +149,29 @@ const resetData = () => {
     localStorage.setItem('brawnCardio', JSON.stringify({}));
     localStorage.setItem('brawnAbs', JSON.stringify({}));
     localStorage.setItem('brawnData',  true);
-    renderLifts('push');
+    renderLifts('pushTab')
     document.querySelector(".credits-modal-overlay").style.display = 'none';
 }
+
+const updateTab = (e) => {
+    navTabs.forEach((tab) => {
+        tab.classList.remove('selectedTab')
+    });
+
+    if(typeof(e) === 'string'){
+        document.querySelector('#' + e).classList.add('selectedTab');
+        renderLifts(e);
+        localStorage.setItem('currentTab', e);
+
+    } else {
+        console.log(e.target)
+        e.target.classList.add('selectedTab');
+        renderLifts(e.target.id);
+        localStorage.setItem('currentTab', e.target.id);
+    }
+}
+console.log(currentTab)
+updateTab(currentTab);
 
 if(!localStorage.getItem('brawnData')){
     resetData();
@@ -163,13 +181,7 @@ navTabs.forEach((tab) => {
     tab.addEventListener('click', updateTab);
 });
 
-renderLifts('push');
-
-const manualReset = () => {
-    confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
-}
-
-//Initialize Modal
+//Initialize Modal -------------------------------------------------------------------------------//
 const clearModal = () => {
     document.querySelector("form>h4").innerText = 'Add a Lift:';
     document.querySelector("input[name='submit']").value = 'Add';

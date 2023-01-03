@@ -26,7 +26,7 @@ header, nav, main {
 main {
     overflow-x: scroll;
     overflow-x: hidden;
-    max-height: 75vh;
+    max-height: 65vh;
 }
 
 header {
@@ -149,6 +149,10 @@ li {
     max-width: 80vw;
     border-radius: 5px;
     padding: 20px;
+}
+
+.credits-modal-body {
+    padding-top: 40px;
 }
 
 .modal-close {
