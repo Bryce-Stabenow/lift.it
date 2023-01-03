@@ -252,7 +252,8 @@ const toggleTimerModal = () => {
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);
 
 //Initialize Timer ------------------------------------------------------------------------------//
-let timeInMS = 0 * 1000;
+let interval = null;
+let time = 0;
 
 const getUserTimerInputs = () => {
     let timerMinutes = parseInt(document.querySelector('#timerMinutes').value);
@@ -261,27 +262,51 @@ const getUserTimerInputs = () => {
     return [timerMinutes, timerSeconds];
 };
 
-const getTimeInMS = () => {
+const getMSFromUserInputs = () => {
     let inputs = getUserTimerInputs();
     let timerMinutes = inputs[0];
     let timerSeconds = inputs[1];
-    return (timerMinutes * 1000) + (timerSeconds * 100);
+    return (timerMinutes * 60000) + (timerSeconds * 1000);
 };
 
-const formatTime = (timeMS) => {
-    return (timeMS / 1000) * 60;
+const formatTime = (timeInMS) => {
+    return (timeInMS / 1000);
 };
 
-const renderTime = () => {
-    let input = getTimeInMS();
+const renderTime = (inputInMS) => {
     let display = document.querySelector('.timerTime');
-    let formattedTime = formatTime(input);
+    let formattedTime = formatTime(inputInMS);
+    time = inputInMS;
 
     display.innerText = formattedTime + ' sec.';
 };
 
-renderTime();
+renderTime(getMSFromUserInputs());
+
+const countSecond = () => {
+    time = time - 1000;
+
+    if(time > 0){
+        renderTime(time);
+    }
+    else if(time <= 0){
+        stopTimer();
+        document.querySelector('.timerTime').innerText = "TIME'S UP";
+        document.querySelector('.timerTime').classList.add('flash');
+    }
+}
 
 const startTimer = () => {
-    
+    if(!interval){
+        interval = setInterval(countSecond, 1000);
+    }
+}
+
+const stopTimer = () => {
+    clearInterval(interval);
+    interval = null;
+}
+
+const resetTimer = () => {
+    renderTime(getMSFromUserInputs());
 }

@@ -156,8 +156,7 @@ li {
     background-color: white;
     position: fixed;
     color: black;
-    min-width: 80vw;
-    max-width: 80vw;
+    max-width: 380px;
     border-radius: 5px;
     padding: 20px;
 }
@@ -206,7 +205,7 @@ li {
     margin-top: 10px;
 }
 
-.timerControls button {
+.timerControls button, .resetTimerButton {
     background-color: rgb(255, 102, 102);
     color: white;
     border: none;
@@ -214,6 +213,20 @@ li {
     font-weight: bold;
     font-size: 2rem;
     border-radius: 5px;
+}
+
+.resetTimerButton {
+    color: rgb(255, 102, 102);
+    background-color: white;
+    border: 1px solid rgb(255, 102, 102);
+    width: 80%;
+    margin-top: 10px;
+}
+
+.resetButtonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 form > h4, .timerTitle {
