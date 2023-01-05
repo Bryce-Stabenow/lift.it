@@ -37,14 +37,20 @@
         <div class="modal-body">
             <form name="addLift">
                 <p class="modal-close pointer" onclick="closeModal()">X</p>
-                <h4>Add a Lift:</h4>
+                <h4>Add an Exercise:</h4>
                 <div class="formInput">
-                    <label for="liftName">Lift Name:</label>
+                    <label for="liftName">Exercise Name:</label>
                     <input name="liftName" type="text" required/>
                 </div>
-                <div class="formInput">
+                <div class="formInput swapInput">
                     <label for="liftWeight">Weight:</label>
                     <input name="liftWeight" type="number"/>
+                </div>
+                <div class="formInput swapInput hidden" id="cardioTrigger">
+                    <label for="speed">Speed/Intensity:</label>
+                    <div class="speedField">
+                        <input name="speed" type="number" min="0" placeholder="0"/>
+                    </div>
                 </div>
                 <div class="formInput">
                     <label for="liftCategory">Category:</label>
@@ -57,7 +63,7 @@
                         <option value="abs">Abs</option>
                     </select>
                 </div>
-                <div class="formInput">
+                <div class="formInput swapInput">
                     <label for="reps1">Reps:</label>
                     <div class="repsField">
                         <input name="reps1" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
@@ -65,6 +71,12 @@
                         <input name="reps3" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
                         <input name="reps4" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
                         <input name="reps5" type="number" min="0" max="100" class="repsInput" placeholder="0"/>
+                    </div>
+                </div>
+                <div class="formInput swapInput hidden">
+                    <label for="time">Time:</label>
+                    <div class="timeField">
+                        <input name="time" type="number" min="0" placeholder="0"/>
                     </div>
                 </div>
                 <input name="submit" type="submit" value="Add" class="pointer"/>

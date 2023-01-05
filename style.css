@@ -298,6 +298,10 @@ button#deleteLift {
     border-radius: 5px;
 }
 
+.hidden {
+    display: none;
+}
+
 /* Responsive */
 @media screen and (max-width: 306px) {
     #addButton {

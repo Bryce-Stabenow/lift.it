@@ -11,17 +11,17 @@ else {
 
 const capFirst = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 const removeAllChildren = (element) => {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
-}
+};
 
 const manualReset = () => {
     confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
-}
+};
 
 //Load CRUD Logic -------------------------------------------------------------------------------//
 const addLift = (category, newData) => {
@@ -38,7 +38,7 @@ const addLift = (category, newData) => {
     };
     
     localStorage.setItem(category, JSON.stringify(existingLifts));
-}
+};
 
 const inspectLift = (e) => {
     let title = e.currentTarget.querySelector('.liftCardTitle').innerText;
@@ -47,17 +47,17 @@ const inspectLift = (e) => {
     openModal();
 
     //Set values in form
-    document.querySelector("form>h4").innerText = 'Edit Lift:';
+    document.querySelector("form>h4").innerText = 'Edit Exercise:';
     document.querySelector("input[name='submit']").value = 'Save';
     document.querySelector("input[name='liftName']").value = lift.name;
     document.querySelector("input[name='liftWeight']").value = lift.weight;
-    document.querySelector("select[name='liftCategory']").value = currentTab.replace('Tab', '');
+    document.querySelector("select[name='liftCategory']").value = localStorage.getItem("currentTab").replace('Tab', '');
     lift.reps.forEach((rep, index) => {
         let name = "input[name='reps" + (index +1) + "']";
         document.querySelector(name).value = rep;
     })
     document.querySelector("button#deleteLift").style.display = 'inline-block';
-}
+};
 
 const renderLifts = (category) => {
     let name = 'brawn' + capFirst(category.replace('Tab', ''));
@@ -101,7 +101,7 @@ const renderLifts = (category) => {
         let fragment = document.createDocumentFragment();
         let text = fragment.appendChild(document.createElement('p'));
 
-        text.textContent = 'No Lifts Yet';
+        text.textContent = 'No Exercises Yet';
         text.setAttribute('class','message');
         document.querySelector('main').appendChild(fragment);
     }
@@ -109,7 +109,7 @@ const renderLifts = (category) => {
     document.querySelectorAll('.liftCard').forEach(card => {
         card.addEventListener('click', inspectLift);
     })
-}
+};
 
 const removeLift = () => {
     let category = 'brawn' + capFirst(currentTab.replace('Tab', ''));
@@ -123,7 +123,7 @@ const removeLift = () => {
         renderLifts(currentTab);
         closeModal();
     };
-}
+};
 
 const editLift = (category, liftName, liftData) => {
     let existingLifts = JSON.parse(localStorage.getItem(category));
@@ -137,7 +137,7 @@ const editLift = (category, liftName, liftData) => {
     existingLifts[liftData.name] = liftData;
 
     localStorage.setItem(category, JSON.stringify(existingLifts));
-}
+};
 
 //Initialize app logic ---------------------------------------------------------------------------//
 const resetData = () => {
@@ -149,7 +149,7 @@ const resetData = () => {
     localStorage.setItem('brawnData',  true);
     renderLifts('pushTab')
     document.querySelector(".credits-modal-overlay").style.display = 'none';
-}
+};
 
 const updateTab = (e) => {
     navTabs.forEach((tab) => {
@@ -166,20 +166,39 @@ const updateTab = (e) => {
         renderLifts(e.target.id);
         localStorage.setItem('currentTab', e.target.id);
     }
-}
+};
 updateTab(currentTab);
 
 if(!localStorage.getItem('brawnData')){
     resetData();
-}
+};
 
 navTabs.forEach((tab) => {
     tab.addEventListener('click', updateTab);
 });
 
+let swapInputs = document.querySelectorAll('.swapInput');
+
 //Initialize Modals ------------------------------------------------------------------------------//
+const setCardioInputs = () => {
+    swapInputs.forEach(input => {
+        input.classList.toggle('hidden');
+    });
+};
+
+const checkInputType = () => {
+    let category = document.querySelector('[name="liftCategory"]').value;
+    let cardioVisible = document.querySelector('#cardioTrigger').classList.contains('hidden') === false;
+    if(category === 'cardio' && cardioVisible === false){
+        setCardioInputs();
+    }
+    else if(category !== 'cardio' && cardioVisible === true){
+        setCardioInputs();
+    };
+};
+
 const clearModal = () => {
-    document.querySelector("form>h4").innerText = 'Add a Lift:';
+    document.querySelector("form>h4").innerText = 'Add an Exercise:';
     document.querySelector("input[name='submit']").value = 'Add';
     document.querySelector("input[name='liftName']").value = '';
     document.querySelector("input[name='liftWeight']").value = '';
@@ -188,20 +207,20 @@ const clearModal = () => {
         let name = "input[name='reps" + (i +1) + "']";
         document.querySelector(name).value = '';
     };
-
     document.querySelector("button#deleteLift").style.display = 'none';
-}
+};
 
 const openModal = () => {
     let overlay = document.querySelector('.modal-overlay');
     overlay.style.display = 'flex';
     clearModal();
-}
+    checkInputType();
+};
 
 const closeModal = () => {
     let overlay = document.querySelector('.modal-overlay');
     overlay.style.display = 'none';
-}
+};
 
 const submitModal = (e) => {
     e.preventDefault();
@@ -225,7 +244,7 @@ const submitModal = (e) => {
     addLift(category, newLift);
     closeModal();
     updateTab(e.currentTarget.liftCategory.value + 'Tab');
-}
+};
 
 const toggleCreditsModal = () => {
     let creditsModal = document.querySelector(".credits-modal-overlay");
@@ -236,7 +255,7 @@ const toggleCreditsModal = () => {
     else {
         creditsModal.style.display = 'flex';
     }
-}
+};
 
 const toggleTimerModal = () => {
     let timerModal = document.querySelector(".timer-modal-overlay");
@@ -247,9 +266,10 @@ const toggleTimerModal = () => {
     else {
         timerModal.style.display = 'flex';
     }
-}
+};
 
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);
+document.querySelector('[name="liftCategory"]').addEventListener('change', checkInputType);
 
 //Initialize Timer ------------------------------------------------------------------------------//
 let interval = null;
@@ -293,20 +313,20 @@ const countSecond = () => {
         stopTimer();
         document.querySelector('.timerTime').innerText = "TIME'S UP";
         document.querySelector('.timerTime').classList.add('flash');
-    }
-}
+    };
+};
 
 const startTimer = () => {
     if(!interval){
         interval = setInterval(countSecond, 1000);
-    }
-}
+    };
+};
 
 const stopTimer = () => {
     clearInterval(interval);
     interval = null;
-}
+};
 
 const resetTimer = () => {
     renderTime(getMSFromUserInputs());
-}
+};
