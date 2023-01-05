@@ -42,7 +42,7 @@ const addLift = (category, newData) => {
 
 const inspectLift = (e) => {
     let title = e.currentTarget.querySelector('.liftCardTitle').innerText;
-    let dataName = 'brawn' + capFirst(currentTab.replace('Tab', ''));
+    let dataName = 'brawn' + capFirst(localStorage.getItem("currentTab").replace('Tab', ''));
     let lift = JSON.parse(localStorage.getItem(dataName))[title];
     openModal();
 
@@ -183,7 +183,7 @@ const clearModal = () => {
     document.querySelector("input[name='submit']").value = 'Add';
     document.querySelector("input[name='liftName']").value = '';
     document.querySelector("input[name='liftWeight']").value = '';
-    document.querySelector("select[name='liftCategory']").value = '';
+    document.querySelector("select[name='liftCategory']").value = localStorage.getItem("currentTab").replace('Tab', '');
     for(let i = 0; i < 5; i++){
         let name = "input[name='reps" + (i +1) + "']";
         document.querySelector(name).value = '';
