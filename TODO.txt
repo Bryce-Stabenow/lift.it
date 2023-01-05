@@ -1,0 +1,2 @@
+fix logic for clear to clear speed and time fields
+get time and speed to render on cards
