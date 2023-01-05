@@ -51,7 +51,7 @@ const inspectLift = (e) => {
     document.querySelector("input[name='submit']").value = 'Save';
     document.querySelector("input[name='liftName']").value = lift.name;
     document.querySelector("input[name='liftWeight']").value = lift.weight;
-    document.querySelector("select[name='liftCategory']").value = currentTab;
+    document.querySelector("select[name='liftCategory']").value = currentTab.replace('Tab', '');
     lift.reps.forEach((rep, index) => {
         let name = "input[name='reps" + (index +1) + "']";
         document.querySelector(name).value = rep;
@@ -112,7 +112,7 @@ const renderLifts = (category) => {
 }
 
 const removeLift = () => {
-    let category = 'brawn' + capFirst(currentTab);
+    let category = 'brawn' + capFirst(currentTab.replace('Tab', ''));
     let existingLifts = JSON.parse(localStorage.getItem(category));
     let liftNameToDelete = document.querySelector("input[name='liftName']").value;
 
