@@ -58,6 +58,8 @@ const inspectLift = (e) => {
     document.querySelector("input[name='submit']").value = 'Save';
     document.querySelector("input[name='liftName']").value = lift.name;
     document.querySelector("input[name='liftWeight']").value = lift.weight;
+    document.querySelector("input[name='speed']").value = lift.speed;
+    document.querySelector("input[name='time']").value = lift.time;
     document.querySelector("select[name='liftCategory']").value = localStorage.getItem("currentTab").replace('Tab', '');
     lift.reps.forEach((rep, index) => {
         let name = "input[name='reps" + (index +1) + "']";
@@ -91,13 +93,13 @@ const renderLifts = (category) => {
             if(data.weight !== '' && category !== 'cardio'){
                 cardWeight.textContent = data.weight + ' lbs.';
             } else if (data.time !== '' && category === 'cardio'){
-                cardWeight.textContent = data.time + ' min';
+                cardWeight.textContent = 'Speed: ' + data.speed;
             }
 
             if(data.reps.length > 0 && category !== 'cardio'){
                 reps.textContent = 'Sets: ' + data.reps.join(', ');
             } else if (data.speed !== '' && category === 'cardio'){
-                reps.textContent = 'Speed/Intensity: ' + data.speed;
+                reps.textContent = data.time + ' min.';
             }
 
             //Add attributes
