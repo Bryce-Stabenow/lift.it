@@ -9,6 +9,11 @@ else {
     currentTab = localStorage.getItem('currentTab');
 };
 
+//Initialize local storage before rendering ------------------------------------------------------//
+if(!localStorage.getItem('brawnData')){
+    resetData();
+};
+
 const capFirst = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -33,8 +38,10 @@ const addLift = (category, newData) => {
 
     existingLifts[newData.name] = {
         name: newData.name,
-        weight: newData.weight,
-        reps: newData.reps
+        weight: newData.weight ?? '',
+        time: newData.time ?? '',
+        reps: newData.reps ?? '',
+        speed: newData.speed ?? '',
     };
     
     localStorage.setItem(category, JSON.stringify(existingLifts));
@@ -60,7 +67,8 @@ const inspectLift = (e) => {
 };
 
 const renderLifts = (category) => {
-    let name = 'brawn' + capFirst(category.replace('Tab', ''));
+    category = category.replace('Tab', '');
+    let name = 'brawn' + capFirst(category);
     let lifts = JSON.parse(localStorage.getItem(name));
     let keys = Object.keys(lifts);
     removeAllChildren(document.querySelector('main'));
@@ -80,12 +88,16 @@ const renderLifts = (category) => {
             //Set text for elements
             cardTitle.textContent = data.name;
 
-            if(data.weight !== ''){
+            if(data.weight !== '' && category !== 'cardio'){
                 cardWeight.textContent = data.weight + ' lbs.';
+            } else if (data.time !== '' && category === 'cardio'){
+                cardWeight.textContent = data.time + ' min';
             }
 
-            if(data.reps.length > 0){
+            if(data.reps.length > 0 && category !== 'cardio'){
                 reps.textContent = 'Sets: ' + data.reps.join(', ');
+            } else if (data.speed !== '' && category === 'cardio'){
+                reps.textContent = 'Speed/Intensity: ' + data.speed;
             }
 
             //Add attributes
@@ -129,7 +141,7 @@ const editLift = (category, liftName, liftData) => {
     let existingLifts = JSON.parse(localStorage.getItem(category));
 
     if(!existingLifts[liftName]){
-        alert("That didn't seem to work. Please try it again");
+        alert("That didn't seem to work. Please try again");
     };
 
     delete existingLifts[liftName];
@@ -139,15 +151,16 @@ const editLift = (category, liftName, liftData) => {
     localStorage.setItem(category, JSON.stringify(existingLifts));
 };
 
+renderLifts('pushTab')
+
 //Initialize app logic ---------------------------------------------------------------------------//
-const resetData = () => {
+function resetData(){
     localStorage.setItem('brawnPush', JSON.stringify({}));
     localStorage.setItem('brawnPull', JSON.stringify({}));
     localStorage.setItem('brawnLegs', JSON.stringify({}));
     localStorage.setItem('brawnCardio', JSON.stringify({}));
     localStorage.setItem('brawnAbs', JSON.stringify({}));
     localStorage.setItem('brawnData',  true);
-    renderLifts('pushTab')
     document.querySelector(".credits-modal-overlay").style.display = 'none';
 };
 
@@ -168,10 +181,6 @@ const updateTab = (e) => {
     }
 };
 updateTab(currentTab);
-
-if(!localStorage.getItem('brawnData')){
-    resetData();
-};
 
 navTabs.forEach((tab) => {
     tab.addEventListener('click', updateTab);
@@ -239,6 +248,8 @@ const submitModal = (e) => {
         name: e.currentTarget.liftName.value,
         weight: e.currentTarget.liftWeight.value,
         reps: reps.filter((set) => set !== ''),
+        time: e.currentTarget.time.value,
+        speed: e.currentTarget.speed.value,
     };
 
     addLift(category, newLift);
@@ -271,7 +282,7 @@ const toggleTimerModal = () => {
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);
 document.querySelector('[name="liftCategory"]').addEventListener('change', checkInputType);
 
-//Initialize Timer ------------------------------------------------------------------------------//
+//Timer ------------------------------------------------------------------------------//
 let interval = null;
 let time = 0;
 
