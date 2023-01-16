@@ -31,13 +31,16 @@ const manualReset = () => {
 //Load CRUD Logic -------------------------------------------------------------------------------//
 const addLift = (category, newData) => {
     let existingLifts = JSON.parse(localStorage.getItem(category));
+    let id = newData.id !== "" ? newData.id : Object.keys(existingLifts).length + 1;
 
-    if(existingLifts[newData.name]){
-        editLift(category, newData.name,newData);
+    if(existingLifts[id]){
+        editLift(category, id, newData);
     };
 
-    existingLifts[newData.name] = {
+    existingLifts[id] = {
+        id: id,
         name: newData.name,
+        category: newData.category,
         weight: newData.weight ?? '',
         time: newData.time ?? '',
         reps: newData.reps ?? '',
@@ -48,19 +51,20 @@ const addLift = (category, newData) => {
 };
 
 const inspectLift = (e) => {
-    let title = e.currentTarget.querySelector('.liftCardTitle').innerText;
+    let id = e.currentTarget.dataset.id;
     let dataName = 'brawn' + capFirst(localStorage.getItem("currentTab").replace('Tab', ''));
-    let lift = JSON.parse(localStorage.getItem(dataName))[title];
+    let lift = JSON.parse(localStorage.getItem(dataName))[id];
     openModal();
 
     //Set values in form
     document.querySelector("form>h4").innerText = 'Edit Exercise:';
     document.querySelector("input[name='submit']").value = 'Save';
     document.querySelector("input[name='liftName']").value = lift.name;
+    document.querySelector("input[name='id']").value = lift.id;
     document.querySelector("input[name='liftWeight']").value = lift.weight;
     document.querySelector("input[name='speed']").value = lift.speed;
     document.querySelector("input[name='time']").value = lift.time;
-    document.querySelector("select[name='liftCategory']").value = localStorage.getItem("currentTab").replace('Tab', '');
+    document.querySelector("select[name='liftCategory']").value = lift.category;
     lift.reps.forEach((rep, index) => {
         let name = "input[name='reps" + (index +1) + "']";
         document.querySelector(name).value = rep;
@@ -104,6 +108,7 @@ const renderLifts = (category) => {
 
             //Add attributes
             newLiftCard.setAttribute('class', 'liftCard pointer');
+            newLiftCard.setAttribute('data-id', data.id)
             cardTitle.setAttribute('class', 'liftCardTitle');
             topCard.setAttribute('class', 'cardTop');
             cardWeight.setAttribute('class', 'liftCardWeight');
@@ -128,10 +133,10 @@ const renderLifts = (category) => {
 const removeLift = () => {
     let category = 'brawn' + capFirst(currentTab.replace('Tab', ''));
     let existingLifts = JSON.parse(localStorage.getItem(category));
-    let liftNameToDelete = document.querySelector("input[name='liftName']").value;
+    let liftIdToDelete = document.querySelector("input[name='id']").value;
 
     if(confirm('Continue deleting this lift?')){
-        delete existingLifts[liftNameToDelete];
+        delete existingLifts[liftIdToDelete];
 
         localStorage.setItem(category, JSON.stringify(existingLifts));
         renderLifts(currentTab);
@@ -164,6 +169,7 @@ function resetData(){
     localStorage.setItem('brawnAbs', JSON.stringify({}));
     localStorage.setItem('brawnData',  true);
     document.querySelector(".credits-modal-overlay").style.display = 'none';
+    window.location.reload();
 };
 
 const updateTab = (e) => {
@@ -182,6 +188,7 @@ const updateTab = (e) => {
         localStorage.setItem('currentTab', e.target.id);
     }
 };
+
 updateTab(currentTab);
 
 navTabs.forEach((tab) => {
@@ -247,7 +254,9 @@ const submitModal = (e) => {
     ];
 
     let newLift = {
+        id: e.currentTarget.id.value,
         name: e.currentTarget.liftName.value,
+        category: e.currentTarget.liftCategory.value,
         weight: e.currentTarget.liftWeight.value,
         reps: reps.filter((set) => set !== ''),
         time: e.currentTarget.time.value,
