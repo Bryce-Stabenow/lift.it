@@ -261,6 +261,9 @@ const clearModal = () => {
     document.querySelector("form>h4").innerText = 'Add an Exercise:';
     document.querySelector("input[name='submit']").value = 'Add';
     document.querySelector("input[name='liftName']").value = '';
+    document.querySelector("input[name='speed']").value = '';
+    document.querySelector("input[name='time']").value = '';
+    document.querySelector("input[name='id']").value = '';
     document.querySelector("input[name='liftWeight']").value = '';
     document.querySelector("select[name='liftCategory']").value = localStorage.getItem("currentTab").replace('Tab', '');
     for(let i = 0; i < 5; i++){
