@@ -36,7 +36,7 @@
     <div class="modal-overlay">
         <div class="modal-body">
             <form name="addLift">
-                <input name="id" readonly type="number" style="display: none;"/>
+                <input name="id" readonly type="number" class="hidden"/>
                 <p class="modal-close pointer" onclick="closeModal()">X</p>
                 <h4>Add an Exercise:</h4>
                 <div class="formInput">
@@ -93,7 +93,9 @@
         <p>Copyright 2023</p>
         <br />
         <button class="resetButton pointer" onclick="manualReset()">RESET ALL DATA</button>
-        <button class="resetButton pointer" onclick="exportLifts()">Export All Lifts</button>
+        <button class="importButton pointer" onclick="exportLifts()">Export Lifts</button>
+        <button class="importButton pointer" onclick="importLifts()">Import Lifts</button>
+        <input type="file" id="importInput" class="hidden" accept=".txt">
         </div>
     </div>
 

@@ -277,12 +277,17 @@ input[type=submit], button#deleteLift {
     justify-self: center;
 }
 
-button#deleteLift {
+button#deleteLift, .importButton {
     background-color: white;
     font-size: 1.5rem;
     border: 1px solid rgb(255, 102, 102);
     color:rgb(255, 102, 102);
     margin-top: 20px;
+}
+
+.importButton {
+    width: 49%;
+    border-radius: 5px;
 }
 
 .creditsLink {

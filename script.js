@@ -14,6 +14,21 @@ if(!localStorage.getItem('brawnData')){
     resetData();
 };
 
+const downloadFile = (file) => {
+    const link = document.createElement("a");
+    link.style.display = "none";
+    link.href = URL.createObjectURL(file);
+    link.download = file.name;
+  
+    document.body.appendChild(link);
+    link.click();
+  
+    setTimeout(() => {
+      URL.revokeObjectURL(link.href);
+      link.parentNode.removeChild(link);
+    }, 0);
+}
+
 const capFirst = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -26,6 +41,18 @@ const removeAllChildren = (element) => {
 
 const manualReset = () => {
     confirm('Are you sure you want to reset your data?') ? resetData() : toggleCreditsModal();
+};
+
+const getAllData = () => {
+    let data = {};
+
+    data.push = JSON.parse(localStorage.getItem('brawnPush'));
+    data.pull = JSON.parse(localStorage.getItem('brawnPull'));
+    data.legs = JSON.parse(localStorage.getItem('brawnLegs'));
+    data.cardio = JSON.parse(localStorage.getItem('brawnCardio'));
+    data.abs = JSON.parse(localStorage.getItem('brawnAbs'));
+
+    return data;
 };
 
 //Load CRUD Logic -------------------------------------------------------------------------------//
@@ -156,6 +183,21 @@ const editLift = (category, liftName, liftData) => {
     existingLifts[liftData.name] = liftData;
 
     localStorage.setItem(category, JSON.stringify(existingLifts));
+};
+
+const exportLifts = () => {
+    let allData = JSON.stringify(getAllData());
+    let dataFile = new File([allData], 'lift-export-' + new Date().toLocaleDateString() + '.txt', {type: 'text/plain'});
+    downloadFile(dataFile);
+};
+
+const importLifts = () => {
+    const input = document.querySelector('#importInput');
+
+    let confrimation = window.confirm('This will overwrite your existing data. Do you want to proceed?');
+    if(confrimation){
+        input.click();
+    }
 };
 
 renderLifts('pushTab')
@@ -293,6 +335,29 @@ const toggleTimerModal = () => {
 document.querySelector('[name="addLift"]').addEventListener('submit', submitModal);
 document.querySelector('[name="liftCategory"]').addEventListener('change', checkInputType);
 
+
+const importInput = document.getElementById("importInput");
+importInput.addEventListener("change", handleFiles);
+
+function handleFiles() {
+    const fileList = this.files;
+    const fileText = fileList[0];
+
+    fileText.text()
+    .then(res => {
+        let uploadText = JSON.parse(res);
+        Object.keys(uploadText).forEach(key => {
+            let data = uploadText[key];
+            let localStorageKey = 'brawn' + capFirst(key);
+            localStorage.setItem(localStorageKey, JSON.stringify(data));
+        });
+        localStorage.setItem('brawnData', true);
+        alert('Lifts Imported successfully!');
+        toggleCreditsModal();
+        window.location.reload();
+    });
+}
+
 //Timer ------------------------------------------------------------------------------//
 let interval = null;
 let time = 0;
@@ -352,3 +417,4 @@ const stopTimer = () => {
 const resetTimer = () => {
     renderTime(getMSFromUserInputs());
 };
+
